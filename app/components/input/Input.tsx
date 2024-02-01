@@ -34,7 +34,7 @@ const Input = ({
 
 	useEffect(() => {
 		initialValue && initialValue !== '' && setValue(initialValue)
-	}, [])
+	}, [initialValue])
 
 	return (
 		<label className={clsx(
@@ -49,7 +49,7 @@ const Input = ({
 				type={type}
 				placeholder={initialValue ? initialValue : placeholder}
 				text={description}
-				value={value}
+				value={value === '' ? initialValue : value}
 				onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)} />
 		</label>
 	)
