@@ -16,6 +16,22 @@ const saveConfiguration = async (
 			}
 		} else {
 			for (const conf of config.data) {
+				const hasData = await prisma.config.findFirst({
+					where: {
+						key: conf.key,
+					},
+				})
+
+				if (!hasData) {
+					await prisma.config.create({
+						data: {
+							key: conf.key,
+							value: conf.value,
+						},
+					})
+					continue
+				}
+
 				await prisma.config.update({
 					where: {
 						key: conf.key,
