@@ -1,6 +1,7 @@
 import { AccessTokenRequest } from '@/app/types/usecase/auth'
 import axios from 'axios'
 import { NextResponse } from 'next/server'
+import saveToken from '@/app/actions/command/config/saveToken'
 
 export async function POST(req: Request) {
 	try {
@@ -16,6 +17,8 @@ export async function POST(req: Request) {
 				'Content-Type': 'application/json; charset=utf-8',
 			},
 		})
+
+		await saveToken(result.data, data.trade_mode)
 
 		return NextResponse.json(result.data)
 	} catch (err) {
