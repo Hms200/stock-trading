@@ -5,6 +5,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { AccessTokenRequest, AccessTokenResponse } from '@/app/types/usecase/auth'
 import { CSpinner } from '@coreui/react'
+import { useRouter } from 'next/navigation'
 
 interface TradeModeSelectTileProps {
 	title: '모의투자' | '실제투자'
@@ -14,12 +15,10 @@ interface TradeModeSelectTileProps {
 }
 
 const TradeModeSelectTile = ({ title, hasKey, appKey, secret }: TradeModeSelectTileProps) => {
+	const router = useRouter()
 	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleClick = () => {
-		console.log('hasKey', hasKey)
-		console.log('key', appKey)
-		console.log('secret', secret)
 		if (!hasKey || !appKey || !secret) return alert('접속 키를 설정해주세요.')
 
 		const body: AccessTokenRequest = {
@@ -40,9 +39,8 @@ const TradeModeSelectTile = ({ title, hasKey, appKey, secret }: TradeModeSelectT
 				localStorage.setItem('access_token', result.access_token)
 				localStorage.setItem('access_token_token_expired', result.access_token_token_expired)
 
-				console.log('access_token', result.access_token)
 				setLoading(false)
-				return true
+				router.push('/home')
 			})
 	}
 
