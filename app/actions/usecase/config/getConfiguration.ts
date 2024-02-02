@@ -7,7 +7,7 @@ const GetConfiguration = async (): Promise<Configuration[] | null> => {
 	if (response.length === 0) {
 		return null
 	} else {
-		return response.map((config) => {
+		return response.map((config: any) => {
 			return config as Configuration
 		})
 	}

@@ -1,18 +1,49 @@
 'use client'
 
 import clsx from 'clsx'
+import { useState } from 'react'
+import axios from 'axios'
+import { AccessTokenRequest, AccessTokenResponse } from '@/app/types/usecase/auth'
+import { CSpinner } from '@coreui/react'
 
 interface TradeModeSelectTileProps {
 	title: '모의투자' | '실제투자'
 	hasKey: boolean
-	key?: string
+	appKey?: string
 	secret?: string
 }
 
-const TradeModeSelectTile = ({ title, hasKey }: TradeModeSelectTileProps) => {
+const TradeModeSelectTile = ({ title, hasKey, appKey, secret }: TradeModeSelectTileProps) => {
+	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleClick = () => {
-		if (!hasKey) return alert('접속 키를 설정해주세요.')
+		console.log('hasKey', hasKey)
+		console.log('key', appKey)
+		console.log('secret', secret)
+		if (!hasKey || !appKey || !secret) return alert('접속 키를 설정해주세요.')
+
+		const body: AccessTokenRequest = {
+			grant_type: 'client_credentials',
+			appkey: appKey,
+			appsecret: secret,
+			trade_mode: title === '모의투자' ? 'virtual' : 'real',
+		}
+		setLoading(true)
+		axios.post('http://localhost:3000/api/auth/get-token', body)
+			.then((res) => {
+				const result: AccessTokenResponse = res.data
+				if (result.status && result.status === 500) {
+					alert('접속키를 발급받지 못했습니다.')
+					setLoading(false)
+					return false
+				}
+				localStorage.setItem('access_token', result.access_token)
+				localStorage.setItem('access_token_token_expired', result.access_token_token_expired)
+
+				console.log('access_token', result.access_token)
+				setLoading(false)
+				return true
+			})
 	}
 
 	return (
@@ -33,10 +64,16 @@ const TradeModeSelectTile = ({ title, hasKey }: TradeModeSelectTileProps) => {
 			onClick={handleClick}
 		>
 			<h4 className={'fw-bolder mb-3'}>{title}</h4>
-			<span className={clsx(
-				'fs-6',
-				!hasKey && 'text-danger fw-bold',
-			)}>접속 키 {hasKey ? '설정됨' : '미설정'}</span>
+			{!loading && (
+				<span className={clsx(
+					'fs-6',
+					!hasKey && 'text-danger fw-bold',
+				)}>접속 키 {hasKey ? '설정됨' : '미설정'}</span>
+			)}
+			{loading && (
+				<CSpinner />
+			)}
+
 		</div>
 	)
 }

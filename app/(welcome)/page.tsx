@@ -2,14 +2,25 @@ import getConfiguration from '@/app/actions/usecase/config/getConfiguration'
 import AppKeyConfigModal from '@/app/(welcome)/components/AppKeyConfigModal'
 import TradeModeSelectTile from '@/app/(welcome)/components/TradeModeSelectTile'
 import OpenAppKeyConfigButton from '@/app/(welcome)/components/OpenAppKeyConfigButton'
+import { Configuration, ConfigurationKeys } from '@/app/types/tables/Configuration'
 
 const Welcome = async () => {
 	const configurations = await getConfiguration()
 
-	const hasVirtualKey: boolean = configurations !== null &&
-		configurations.filter((item) => item.key.startsWith('virtual')).length === 2
-	const hasRealKey: boolean = configurations !== null &&
-		configurations.filter((item) => item.key.startsWith('real')).length === 2
+	const hasKey = (mode: 'virtual' | 'real'): boolean => {
+		if (!configurations) return false
+		return configurations.filter((item) => item.key.startsWith(mode)).length === 2
+	}
+
+	const getValue = (key: ConfigurationKeys): string | undefined => {
+		if (!configurations) return undefined
+
+		const value: Configuration[] = configurations.filter((item) => item.key === key)
+
+		if (value.length === 0) return undefined
+
+		return value[0].value
+	}
 
 	return (
 		<>
@@ -36,16 +47,20 @@ const Welcome = async () => {
 					rounded
 					position-relative
 					`}>
+
 					<TradeModeSelectTile
-						color={'warning'}
 						title={'모의투자'}
-						hasKey={hasVirtualKey}
+						hasKey={hasKey('virtual')}
+						appKey={getValue('virtual_accessKey')}
+						secret={getValue('virtual_secretKey')}
 					/>
 					<TradeModeSelectTile
-						color={'success'}
 						title={'실제투자'}
-						hasKey={hasRealKey}
+						hasKey={hasKey('real')}
+						appKey={getValue('real_accessKey')}
+						secret={getValue('real_secretKey')}
 					/>
+
 					{configurations !== null && (
 						<OpenAppKeyConfigButton data={configurations} />
 					)}

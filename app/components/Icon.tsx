@@ -18,6 +18,7 @@ const Icon = ({ icon, size, width, height, className }: IconProps) => {
 			size={size}
 			width={width}
 			height={height}
+			// @ts-ignore
 			icon={cicon[icon]} />
 	)
 }
