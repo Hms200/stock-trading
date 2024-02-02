@@ -18,6 +18,10 @@ export async function POST(req: Request) {
 			},
 		})
 
+		if (result.data.error_description) {
+			return NextResponse.json({ message: result.data.error_description, status: 500 })
+		}
+
 		await saveToken(result.data, data.trade_mode)
 
 		return NextResponse.json(result.data)

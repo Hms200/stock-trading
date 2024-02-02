@@ -1,11 +1,12 @@
 'use client'
 
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { AccessTokenRequest, AccessTokenResponse } from '@/app/types/usecase/auth'
 import { CSpinner } from '@coreui/react'
 import { useRouter } from 'next/navigation'
+import { AuthContext } from '@/app/context/AuthContext'
 
 interface TradeModeSelectTileProps {
 	title: '모의투자' | '실제투자'
@@ -17,6 +18,7 @@ interface TradeModeSelectTileProps {
 const TradeModeSelectTile = ({ title, hasKey, appKey, secret }: TradeModeSelectTileProps) => {
 	const router = useRouter()
 	const [loading, setLoading] = useState<boolean>(false)
+	const { setVirtualAccessKey, setVirtualSecretKey, setRealAccessKey, setRealSecretKey } = useContext(AuthContext)
 
 	const handleClick = () => {
 		if (!hasKey || !appKey || !secret) return alert('접속 키를 설정해주세요.')
@@ -43,6 +45,18 @@ const TradeModeSelectTile = ({ title, hasKey, appKey, secret }: TradeModeSelectT
 				router.push('/home')
 			})
 	}
+
+	useEffect(() => {
+		if (appKey && secret) {
+			if (title === '모의투자') {
+				setVirtualAccessKey(appKey)
+				setVirtualSecretKey(secret)
+			} else {
+				setRealAccessKey(appKey)
+				setRealSecretKey(secret)
+			}
+		}
+	}, [])
 
 	return (
 		<div
