@@ -17,3 +17,12 @@ model Config {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  expiredAt DateTime
+  mode      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

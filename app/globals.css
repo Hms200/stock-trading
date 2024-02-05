@@ -4,8 +4,23 @@ body,
     height: 100%;
 }
 
+/*font & text*/
+.fs-xm {
+    font-size: 12px !important;
+}
+
+.narrow-line-height {
+    line-height: 15px !important;
+}
+
+/*cursor shape*/
+
 .cursor-pointer {
     cursor: pointer;
+}
+
+.cursor-default {
+    cursor: default;
 }
 
 /*hover background colors*/

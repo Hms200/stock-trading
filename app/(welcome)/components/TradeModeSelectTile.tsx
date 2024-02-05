@@ -40,6 +40,7 @@ const TradeModeSelectTile = ({ title, hasKey, appKey, secret }: TradeModeSelectT
 				}
 				localStorage.setItem('access_token', result.access_token)
 				localStorage.setItem('access_token_token_expired', result.access_token_token_expired)
+				localStorage.setItem('mode', title === '모의투자' ? 'virtual' : 'real')
 
 				setLoading(false)
 				router.push('/home')

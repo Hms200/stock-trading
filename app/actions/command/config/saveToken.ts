@@ -22,7 +22,7 @@ const saveToken = async (data: AccessTokenResponse, tradeMode: 'virtual' | 'real
 			await prisma.token.create({
 				data: {
 					token: data.access_token,
-					expiredAt: data.access_token_token_expired.replace(' ', 'T'),
+					expiredAt: new Date(data.access_token_token_expired).toISOString(),
 					mode: tradeMode,
 				},
 			})
