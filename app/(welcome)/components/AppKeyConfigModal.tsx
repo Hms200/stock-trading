@@ -80,7 +80,10 @@ const AppKeyConfigModal = ({ open, init, data, openDispatcher }: AppKeyConfigMod
 		if (data) {
 			dataList.forEach((item) => {
 				const value = getValue(item.key)
-				if (value) item.setter(value)
+				if (value) {
+					item.setter(value)
+					localStorage.setItem(item.key, value)
+				}
 			})
 		}
 	}, [data])

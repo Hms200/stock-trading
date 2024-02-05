@@ -15,11 +15,11 @@ const TradeModeIndicator = ({ isTradePossible }: TradeModeIndicatorProps) => {
 
 	let mode, expiredDate, token: string
 
-	const [loading, setLoading] = useState(true)
-	const [tradeMode, setTradeMode] = useState('')
-	const [hasExpired, setHasExpired] = useState(false)
-	const [renewed, setRenewed] = useState(false)
-	const [expiredAt, setExpiredAt] = useState('')
+	const [loading, setLoading] = useState<boolean>(true)
+	const [tradeMode, setTradeMode] = useState<string>('')
+	const [hasExpired, setHasExpired] = useState<boolean>(false)
+	const [renewed, setRenewed] = useState<boolean>(false)
+	const [expiredAt, setExpiredAt] = useState<string>('')
 
 	useEffect(() => {
 		mode = localStorage.getItem('mode')?.toLocaleLowerCase()

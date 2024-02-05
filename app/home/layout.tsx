@@ -12,8 +12,8 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
 	const appsecret = keys !== null ? keys.filter((key) => key.key === 'real_secretKey')[0] : null
 
 	const isTradePossible = async () => {
-		if (!tokens.data) return false as string
-		if (!tokens.data.real) return false as string
+		if (!tokens.data) return 'false'
+		if (!tokens.data.real) return 'false'
 
 		const result: {
 			message?: string,
@@ -30,7 +30,7 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
 	}
 
 	return (
-		<div className={'w-100 h-100 d-flex'}>
+		<div className={'h-100 d-flex flex-row justify-content-start'}>
 			<Sidebar isTradePossible={await isTradePossible()} />
 			{children}
 		</div>
