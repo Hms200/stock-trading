@@ -56,9 +56,9 @@ const TradeModeIndicator = ({ isTradePossible }: TradeModeIndicatorProps) => {
 			<div className={'col-12 d-flex justify-content-between'}>
 				<CBadge
 					className={'p-2 cursor-default h-75'}
-					color={mode === 'virtual' ? 'warning' : 'success'}
+					color={tradeMode === 'virtual' ? 'warning' : 'success'}
 				>
-					{mode === 'virtual' ? '모의투자' : '실제투자'}
+					{tradeMode === 'virtual' ? '모의투자' : '실제투자'}
 				</CBadge>
 				{tradeMode === 'real' && (
 					<CBadge

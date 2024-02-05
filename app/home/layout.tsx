@@ -12,8 +12,8 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
 	const appsecret = keys !== null ? keys.filter((key) => key.key === 'real_secretKey')[0] : null
 
 	const isTradePossible = async () => {
-		if (!tokens.data) return false
-		if (!tokens.data.real) return false
+		if (!tokens.data) return false as string
+		if (!tokens.data.real) return false as string
 
 		const result: {
 			message?: string,
