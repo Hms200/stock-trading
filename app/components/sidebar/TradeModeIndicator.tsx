@@ -1,6 +1,6 @@
 'use client'
 
-import { CBadge } from '@coreui/react'
+import { CBadge, CSpinner } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
@@ -15,6 +15,7 @@ const TradeModeIndicator = ({ isTradePossible }: TradeModeIndicatorProps) => {
 
 	let mode, expiredDate, token: string
 
+	const [loading, setLoading] = useState(true)
 	const [tradeMode, setTradeMode] = useState('')
 	const [hasExpired, setHasExpired] = useState(false)
 	const [renewed, setRenewed] = useState(false)
@@ -32,6 +33,9 @@ const TradeModeIndicator = ({ isTradePossible }: TradeModeIndicatorProps) => {
 			alert('접속인증을 다시 받아야 합니다.')
 			router.push('/')
 		}
+
+		setLoading(false)
+
 		const expired = setInterval(() => {
 			if (expiredDate) {
 				const expired = new Date(expiredDate)
@@ -54,21 +58,26 @@ const TradeModeIndicator = ({ isTradePossible }: TradeModeIndicatorProps) => {
 	return (
 		<div className={'d-flex flex-wrap justify-content-between align-items-center'}>
 			<div className={'col-12 d-flex justify-content-between'}>
-				<CBadge
-					className={'p-2 cursor-default h-75'}
-					color={tradeMode === 'virtual' ? 'warning' : 'success'}
-				>
-					{tradeMode === 'virtual' ? '모의투자' : '실제투자'}
-				</CBadge>
-				{tradeMode === 'real' && (
-					<CBadge
-						className={'p-2 cursor-default h-75'}
-						color={isTradePossible ? 'success' : 'danger'}
-						outlined
-					>
-						{isTradePossible ? '주문가능' : '주문불가'}
-					</CBadge>
+				{loading ? (<CSpinner />) : (
+					<>
+						<CBadge
+							className={'p-2 cursor-default h-75'}
+							color={tradeMode === 'virtual' ? 'warning' : 'success'}
+						>
+							{tradeMode === 'virtual' ? '모의투자' : '실제투자'}
+						</CBadge>
+						{tradeMode === 'real' && (
+							<CBadge
+								className={'p-2 cursor-default h-75'}
+								color={isTradePossible ? 'success' : 'danger'}
+								outlined
+							>
+								{isTradePossible ? '주문가능' : '주문불가'}
+							</CBadge>
+						)}
+					</>
 				)}
+
 			</div>
 
 			<div className={'d-flex justify-content-between col-12 narrow-line-height mt-2'}>
