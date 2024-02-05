@@ -86,14 +86,13 @@ const IndexCard = ({ market }: IndexCardProps) => {
 		}
 
 		axios.post('http://localhost:3000/api/trade/check-price', body).then((res) => {
-			console.log(res.data)
 			if (res.data.status !== 200) {
 				setError(res.data.message)
 				return
 			}
 			setData(res.data.data)
 		})
-			.catch((err) => console.error(err))
+			.catch((err) => setError(err.message?.toString() || '알 수 없는 에러'))
 	}
 
 	useEffect(() => {
