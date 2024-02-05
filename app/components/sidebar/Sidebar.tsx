@@ -2,6 +2,7 @@
 
 import { CSidebar, CSidebarBrand } from '@coreui/react'
 import TradeModeIndicator from '@/app/components/sidebar/TradeModeIndicator'
+import NavLink from '@/app/components/sidebar/NavLink'
 
 interface SidebarProps {
 	isTradePossible: string
@@ -14,7 +15,7 @@ const Sidebar = ({ isTradePossible }: SidebarProps) => {
 			<CSidebarBrand className={'border-bottom p-3 text-decoration-none'}>
 				<TradeModeIndicator isTradePossible={isTradePossible} />
 			</CSidebarBrand>
-			sidebar
+			<NavLink />
 		</CSidebar>
 	)
 }

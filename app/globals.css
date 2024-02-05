@@ -13,6 +13,10 @@ body,
     line-height: 15px !important;
 }
 
+.hover-underline:hover {
+    text-decoration: underline !important;
+}
+
 /*cursor shape*/
 
 .cursor-pointer {
