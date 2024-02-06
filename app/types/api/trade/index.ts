@@ -89,7 +89,7 @@ export type CheckPriceResponse = {
 		/* 전일 저가 */
 		futs_prdy_lwpr: string
 	},
-	/* 조회기간 데이터 배열 */
+	/* 조회기간 데이터 배열. 최근일부터 내림차순임 */
 	output2: {
 		/* 영업일자 */
 		stck_bsop_date: string

@@ -11,7 +11,7 @@ interface SidebarProps {
 const Sidebar = ({ isTradePossible }: SidebarProps) => {
 	return (
 		<CSidebar
-			className={'border-end'}>
+			className={'border'}>
 			<CSidebarBrand className={'border-bottom p-3 text-decoration-none'}>
 				<TradeModeIndicator isTradePossible={isTradePossible} />
 			</CSidebarBrand>

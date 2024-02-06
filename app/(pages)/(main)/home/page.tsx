@@ -1,4 +1,4 @@
-import IndexCard from '@/app/home/components/IndexCard'
+import IndexCard from '@/app/(pages)/(main)/home/components/IndexCard'
 
 const Home = async () => {
 	return (

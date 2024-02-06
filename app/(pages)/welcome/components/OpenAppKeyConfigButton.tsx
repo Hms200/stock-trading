@@ -2,7 +2,7 @@
 
 import Icon from '@/app/components/Icon'
 import { useState } from 'react'
-import AppKeyConfigModal from '@/app/(welcome)/components/AppKeyConfigModal'
+import AppKeyConfigModal from '@/app/(pages)/welcome/components/AppKeyConfigModal'
 import { Configuration } from '@/app/types/tables/Configuration'
 
 const OpenAppKeyConfigButton = ({ data }: { data: Configuration[] }) => {
